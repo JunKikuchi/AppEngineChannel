@@ -1,0 +1,18 @@
+<html>
+  <head>
+    <title>AppEngineChannelServerExample</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="/_ah/channel/jsapi"></script>
+    <script>
+      var client_id = '{{client_id}}';
+    </script>
+    <script src="/static/main.js"></script>
+  </head>
+  <body>
+    <form action="/channel/echo" method="post">
+      <input type="text" name="message" value="" id="message" />
+      <input type="submit" name="submit" value="send" />
+    </form>
+    <dl id="messages"></dl>
+  </body>
+</html>
