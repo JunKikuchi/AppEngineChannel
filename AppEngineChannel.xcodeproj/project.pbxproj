@@ -19,6 +19,7 @@
 		3D5989A615EE57A10009F580 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D5989A415EE57A10009F580 /* MainStoryboard.storyboard */; };
 		3D5989A915EE57A10009F580 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D5989A815EE57A10009F580 /* ViewController.m */; };
 		3D5989AD15EE57B80009F580 /* libAppEngineChannel.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D59897C15EE55D70009F580 /* libAppEngineChannel.a */; };
+		3DE019CF160600380092D6BB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D59899315EE57A10009F580 /* UIKit.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -59,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DE019CF160600380092D6BB /* UIKit.framework in Frameworks */,
 				3D59898015EE55D70009F580 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -379,6 +381,7 @@
 				3D59898C15EE55D70009F580 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		3D5989AA15EE57A10009F580 /* Build configuration list for PBXNativeTarget "AppEngineChannelClientExample" */ = {
 			isa = XCConfigurationList;
@@ -387,6 +390,7 @@
 				3D5989AC15EE57A10009F580 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

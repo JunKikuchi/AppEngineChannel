@@ -11,8 +11,6 @@ from google.appengine.api import channel
 import logging
 
 class Client(ndb.Model):
-  pass
-
   def send_message(self, message):
     try:
       client_id = self.key.id()

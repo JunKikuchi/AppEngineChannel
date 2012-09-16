@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AppEngineChannel.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <AppEngineChannelDelegate>
 
 @end

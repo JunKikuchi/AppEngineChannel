@@ -8,6 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AppEngineChannel : NSObject
+@class AppEngineChannel;
 
+@protocol AppEngineChannelDelegate <NSObject>
+@optional
+- (void) appEngineChannelOpen:(AppEngineChannel *)channel;
+- (void) appEngineChannel:(AppEngineChannel *)channel message:(NSString *)message;
+- (void) appEngineChannel:(AppEngineChannel *)channel error:(NSDictionary *)error;
+- (void) appEngineChannelClose:(AppEngineChannel *)channel;
+@end
+
+@interface AppEngineChannel : NSObject
+- (id)initWithBaseURL:(NSURL *)baseURL token:(NSString *)token delegate:(id <AppEngineChannelDelegate>)delegate;
 @end
