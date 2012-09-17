@@ -12,12 +12,13 @@
 
 @protocol AppEngineChannelDelegate <NSObject>
 @optional
-- (void) appEngineChannelOpen:(AppEngineChannel *)channel;
-- (void) appEngineChannel:(AppEngineChannel *)channel message:(NSDictionary *)message;
-- (void) appEngineChannel:(AppEngineChannel *)channel error:(NSDictionary *)error;
-- (void) appEngineChannelClose:(AppEngineChannel *)channel;
+- (void) appEngineChannelDidConnect:(AppEngineChannel *)channel;
+- (void) appEngineChannelDidDisconnect:(AppEngineChannel *)channel;
+- (void) appEngineChannel:(AppEngineChannel *)channel didReceiveMessage:(NSDictionary *)message;
+- (void) appEngineChannel:(AppEngineChannel *)channel didReceiveError:(NSDictionary *)error;
 @end
 
 @interface AppEngineChannel : NSObject
-- (id)initWithBaseURL:(NSURL *)baseURL token:(NSString *)token delegate:(id <AppEngineChannelDelegate>)delegate;
+- (id)initWithDelegate:(id<AppEngineChannelDelegate>)delegate;
+- (void)connectWithToken:(NSString *)token baseURL:(NSURL *)baseURL;
 @end

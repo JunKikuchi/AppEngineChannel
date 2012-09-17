@@ -24,7 +24,8 @@
     if (data) {
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
         NSString *token = [dict objectForKey:@"token"];
-        appEngineChannel = [[AppEngineChannel alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:8080/"] token:token delegate:self];
+        appEngineChannel = [[AppEngineChannel alloc] initWithDelegate:self];
+        [appEngineChannel connectWithToken:token baseURL:[NSURL URLWithString:@"http://localhost:8080/"]];
     } else {
         NSLog(@"local server is not working");
     }
@@ -41,20 +42,20 @@
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
 
-- (void)appEngineChannelOpen:(AppEngineChannel *)channel {
-    NSLog(@"appEngineChannelOpen: %@", channel);
+- (void)appEngineChannelDidConnect:(AppEngineChannel *)channel {
+    NSLog(@"appEngineChannelDidConnect: %@", channel);
 }
 
-- (void)appEngineChannel:(AppEngineChannel *)channel message:(NSDictionary *)message {
-    NSLog(@"appEngineChannel: %@ message: %@", channel, message);
+- (void)appEngineChannelDidDisconnect:(AppEngineChannel *)channel {
+    NSLog(@"appEngineChannelDidDisconnect: %@", channel);
 }
 
-- (void)appEngineChannel:(AppEngineChannel *)channel error:(NSDictionary *)error {
-    NSLog(@"appEngineChannel: %@ error: %@", channel, error);
+- (void)appEngineChannel:(AppEngineChannel *)channel didReceiveMessage:(NSDictionary *)message {
+    NSLog(@"appEngineChannel: %@ didReceiveMessage: %@", channel, message);
 }
 
-- (void)appEngineChannelClose:(AppEngineChannel *)channel {
-    NSLog(@"appEngineChannelClose: %@", channel);
+- (void)appEngineChannel:(AppEngineChannel *)channel didReceiveError:(NSDictionary *)error {
+    NSLog(@"appEngineChannel: %@ didReceiveError: %@", channel, error);
 }
 
 @end

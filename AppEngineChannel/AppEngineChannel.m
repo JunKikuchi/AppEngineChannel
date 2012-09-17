@@ -54,20 +54,22 @@ static NSString *html = @""
 "</html>"
 "";
 
-- (id)initWithBaseURL:(NSURL *)baseURL token:(NSString *)token delegate:(id <AppEngineChannelDelegate>)delegate {
+- (id)initWithDelegate:(id<AppEngineChannelDelegate>)delegate {
     if(self = [self init]) {
+        _delegate = delegate;
+
         NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
         [center addObserver:self selector:@selector(appEngineChannelEvent:) name:@"appEngineChannelEvent" object:nil];
 
-        _delegate = delegate;
-        
         [NSURLProtocol registerClass:[AppEngineChannelProtocol class]];
-        
-        _webView = [[UIWebView alloc] init];
-        [_webView loadHTMLString:[NSString stringWithFormat:html, token] baseURL:baseURL];
     }
     
     return self;
+}
+
+- (void)connectWithToken:(NSString *)token baseURL:(NSURL *)baseURL {
+    _webView = [[UIWebView alloc] init];
+    [_webView loadHTMLString:[NSString stringWithFormat:html, token] baseURL:baseURL];
 }
 
 - (void)appEngineChannelEvent:(NSNotification *)notification {
@@ -86,18 +88,18 @@ static NSString *html = @""
         [query setObject:value forKey:key];
     }
     
-    if ([url.host isEqualToString:@"onmessage"] && [_delegate respondsToSelector:@selector(appEngineChannel:message:)]) {
+    if ([url.host isEqualToString:@"onmessage"] && [_delegate respondsToSelector:@selector(appEngineChannel:didReceiveMessage:)]) {
         NSData *data = [[query objectForKey:@"data"] dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *message = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        [_delegate appEngineChannel:self message:message];
-    } else if ([url.host isEqualToString:@"onerror"] && [_delegate respondsToSelector:@selector(appEngineChannel:error:)]) {
+        [_delegate appEngineChannel:self didReceiveMessage:message];
+    } else if ([url.host isEqualToString:@"onerror"] && [_delegate respondsToSelector:@selector(appEngineChannel:didReceiveError:)]) {
         NSData *data = [[query objectForKey:@"error"] dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *error = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-        [_delegate appEngineChannel:self error:error];
-    } else if([url.host isEqualToString:@"onopen"] && [_delegate respondsToSelector:@selector(appEngineChannelOpen:)]) {
-        [_delegate appEngineChannelOpen:self];
-    } else if ([url.host isEqualToString:@"onclose"] && [_delegate respondsToSelector:@selector(appEngineChannelClose:)]) {
-        [_delegate appEngineChannelClose:self];
+        [_delegate appEngineChannel:self didReceiveError:error];
+    } else if([url.host isEqualToString:@"onopen"] && [_delegate respondsToSelector:@selector(appEngineChannelDidConnect:)]) {
+        [_delegate appEngineChannelDidConnect:self];
+    } else if ([url.host isEqualToString:@"onclose"] && [_delegate respondsToSelector:@selector(appEngineChannelDidDisconnect:)]) {
+        [_delegate appEngineChannelDidDisconnect:self];
     }
 }
 @end
