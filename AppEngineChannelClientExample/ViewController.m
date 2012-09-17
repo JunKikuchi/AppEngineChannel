@@ -21,9 +21,13 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:@"http://localhost:8080/channel?client_id=aaa"]];
-    NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
-    NSString *token = [dict objectForKey:@"token"];
-    appEngineChannel = [[AppEngineChannel alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:8080/"] token:token delegate:self];
+    if (data) {
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingAllowFragments error:nil];
+        NSString *token = [dict objectForKey:@"token"];
+        appEngineChannel = [[AppEngineChannel alloc] initWithBaseURL:[NSURL URLWithString:@"http://localhost:8080/"] token:token delegate:self];
+    } else {
+        NSLog(@"local server is not working");
+    }
 }
 
 - (void)viewDidUnload
@@ -41,7 +45,7 @@
     NSLog(@"appEngineChannelOpen: %@", channel);
 }
 
-- (void)appEngineChannel:(AppEngineChannel *)channel message:(NSString *)message {
+- (void)appEngineChannel:(AppEngineChannel *)channel message:(NSDictionary *)message {
     NSLog(@"appEngineChannel: %@ message: %@", channel, message);
 }
 

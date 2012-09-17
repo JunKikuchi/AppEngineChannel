@@ -12,10 +12,7 @@
 @interface AppEngineChannelProtocol : NSURLProtocol
 @end
 
-@implementation AppEngineChannelProtocol {
-    AppEngineChannel *channel;
-}
-
+@implementation AppEngineChannelProtocol
 + (BOOL)canInitWithRequest:(NSURLRequest *)request {
     return [request.URL.scheme isEqualToString:@"appenginechannel"];
 }
@@ -31,7 +28,6 @@
 }
 
 - (void)stopLoading {}
-
 @end
 
 @implementation AppEngineChannel {
@@ -58,14 +54,14 @@ static NSString *html = @""
 "</html>"
 "";
 
-- (id)initWithBaseURL:(NSURL *)baseURL token:(NSString *)token  delegate:(id <AppEngineChannelDelegate>)delegate {
+- (id)initWithBaseURL:(NSURL *)baseURL token:(NSString *)token delegate:(id <AppEngineChannelDelegate>)delegate {
     if(self = [self init]) {
+        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+        [center addObserver:self selector:@selector(appEngineChannelEvent:) name:@"appEngineChannelEvent" object:nil];
+
         _delegate = delegate;
         
         [NSURLProtocol registerClass:[AppEngineChannelProtocol class]];
-        
-        NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-        [center addObserver:self selector:@selector(appEngineChannelEvent:) name:@"appEngineChannelEvent" object:nil];
         
         _webView = [[UIWebView alloc] init];
         [_webView loadHTMLString:[NSString stringWithFormat:html, token] baseURL:baseURL];
@@ -81,13 +77,19 @@ static NSString *html = @""
     NSMutableDictionary *query = [NSMutableDictionary dictionary];
     
     for (int i=0; i < params.count; i += 2) {
-        NSString *value = [[[params objectAtIndex:i + 1] stringByReplacingOccurrencesOfString:@"+" withString:@" "] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        NSString *value = [params objectAtIndex:i + 1];
+        value = [value stringByReplacingOccurrencesOfString:@"+" withString:@" "];
+        value = [value stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+        
         NSString *key = [params objectAtIndex:i];
+        
         [query setObject:value forKey:key];
     }
     
     if ([url.host isEqualToString:@"onmessage"] && [_delegate respondsToSelector:@selector(appEngineChannel:message:)]) {
-        [_delegate appEngineChannel:self message:[query objectForKey:@"data"]];
+        NSData *data = [[query objectForKey:@"data"] dataUsingEncoding:NSUTF8StringEncoding];
+        NSDictionary *message = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        [_delegate appEngineChannel:self message:message];
     } else if ([url.host isEqualToString:@"onerror"] && [_delegate respondsToSelector:@selector(appEngineChannel:error:)]) {
         NSData *data = [[query objectForKey:@"error"] dataUsingEncoding:NSUTF8StringEncoding];
         NSDictionary *error = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
@@ -98,5 +100,4 @@ static NSString *html = @""
         [_delegate appEngineChannelClose:self];
     }
 }
-
 @end

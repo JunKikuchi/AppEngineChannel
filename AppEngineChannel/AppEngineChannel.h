@@ -13,7 +13,7 @@
 @protocol AppEngineChannelDelegate <NSObject>
 @optional
 - (void) appEngineChannelOpen:(AppEngineChannel *)channel;
-- (void) appEngineChannel:(AppEngineChannel *)channel message:(NSString *)message;
+- (void) appEngineChannel:(AppEngineChannel *)channel message:(NSDictionary *)message;
 - (void) appEngineChannel:(AppEngineChannel *)channel error:(NSDictionary *)error;
 - (void) appEngineChannelClose:(AppEngineChannel *)channel;
 @end

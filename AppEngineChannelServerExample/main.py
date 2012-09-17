@@ -15,7 +15,7 @@ class Client(ndb.Model):
     try:
       client_id = self.key.id()
 
-      data = {'client_id': client_id,'message': message}
+      data = {'message': message}
       body = json.encode(data)
       channel.send_message(client_id, body)
     except channel.InvalidChannelClientIdError:

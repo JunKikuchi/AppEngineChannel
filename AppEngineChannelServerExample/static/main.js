@@ -7,9 +7,7 @@ $(function(){
   });
 
   var render_message = function(client_id, message) {
-    $('#messages')
-      .append('<dt>' + client_id + '</dt>')
-      .append('<dd>' + message + '</dd>');
+    $('#messages').append('<li>' + message + '</li>');
   };
 
   var onopen = function() {
