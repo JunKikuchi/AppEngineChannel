@@ -64,14 +64,33 @@ class EchoHandler(webapp2.RequestHandler):
     query = Client.query()
     for client in query:
       try:
+        logging.info(client)
         client.send_message(message)
       except channel.InvalidMessageError:
         return
 
+class CountHandler(webapp2.RequestHandler):
+  def get(self):
+    num = self.request.get('num')
+    logging.info(num)
+    if num is None:
+      return
+
+    num = int(num) + 1
+
+    query = Client.query()
+    for client in query:
+      try:
+        logging.info(client)
+        client.send_message(num)
+      except channel.InvalidMessageError:
+        return
+
 routes = [
-  ('/',             MainHandler),
-  ('/channel',      ChannelHandler),
-  ('/channel/echo', EchoHandler),
+  ('/',              MainHandler),
+  ('/channel',       ChannelHandler),
+  ('/channel/echo',  EchoHandler),
+  ('/channel/count', CountHandler),
 ]
 
 app = webapp2.WSGIApplication(routes, debug=True)

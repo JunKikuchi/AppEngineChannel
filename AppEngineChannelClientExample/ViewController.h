@@ -10,5 +10,8 @@
 #import "AppEngineChannel.h"
 
 @interface ViewController : UIViewController <AppEngineChannelDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *countLabel;
+@property (weak, nonatomic) IBOutlet UIButton *startButton;
+- (IBAction)startButtonTapped:(id)sender;
 
 @end

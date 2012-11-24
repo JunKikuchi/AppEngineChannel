@@ -18,7 +18,7 @@
 - (void) appEngineChannel:(AppEngineChannel *)channel didReceiveError:(NSDictionary *)error;
 @end
 
-@interface AppEngineChannel : NSObject
+@interface AppEngineChannel : NSObject <UIWebViewDelegate>
 - (id)initWithDelegate:(id<AppEngineChannelDelegate>)delegate;
 - (void)connectWithToken:(NSString *)token baseURL:(NSURL *)baseURL;
 @end

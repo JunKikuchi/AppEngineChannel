@@ -19,6 +19,9 @@ handlers:
 - url: .*
   script: main.app
 
+inbound_services:
+- channel_presence
+
 libraries:
 - name: webapp2
   version: "2.5.1"
