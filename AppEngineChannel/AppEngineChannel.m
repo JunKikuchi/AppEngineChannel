@@ -14,7 +14,6 @@
 
 @implementation AppEngineChannel {
     NSString *_token;
-    BOOL _isLoadJS;
     UIWebView *_webView;
     id <AppEngineChannelDelegate> _delegate;
 }
@@ -29,7 +28,6 @@
 
 - (void)connectWithToken:(NSString *)token baseURL:(NSURL *)baseURL {
     _token = token;
-    _isLoadJS = NO;
     _webView = [[UIWebView alloc] init];
     _webView.delegate = self;
     
@@ -39,7 +37,7 @@
     NSData *data = [NSData dataWithBytes:AppEngineChannel_html length:AppEngineChannel_html_len];
     NSString *html = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     
-    [_webView loadHTMLString:html baseURL:baseURL];
+    [_webView loadHTMLString:[NSString stringWithFormat:html, _token] baseURL:baseURL];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
@@ -74,18 +72,6 @@
 
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     NSLog(@"webViewDidFinishLoad:%@", webView.request.URL);
-    
-    if (!_isLoadJS) {
-        extern unsigned char AppEngineChannel_js[];
-        extern unsigned int AppEngineChannel_js_len;
-        
-        NSData *data = [NSData dataWithBytes:AppEngineChannel_js length:AppEngineChannel_js_len];
-        NSString *js = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        
-        [_webView stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:js, _token]];
-        
-        _isLoadJS = YES;
-    }
 }
 
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error {

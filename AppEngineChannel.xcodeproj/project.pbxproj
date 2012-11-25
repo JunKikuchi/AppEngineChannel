@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3D1C0C861660F0E300C8FA3C /* AppEngineChannel.html in Sources */ = {isa = PBXBuildFile; fileRef = 3D1C0C811660E7ED00C8FA3C /* AppEngineChannel.html */; };
-		3D1C0C881660F41100C8FA3C /* AppEngineChannel.js in Sources */ = {isa = PBXBuildFile; fileRef = 3D1C0C871660F41100C8FA3C /* AppEngineChannel.js */; };
+		3D57517B16623B2A008130DF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D57517A16623B2A008130DF /* Default-568h@2x.png */; };
 		3D59898015EE55D70009F580 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D59897F15EE55D70009F580 /* Foundation.framework */; };
 		3D59898515EE55D70009F580 /* AppEngineChannel.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3D59898415EE55D70009F580 /* AppEngineChannel.h */; };
 		3D59898715EE55D70009F580 /* AppEngineChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D59898615EE55D70009F580 /* AppEngineChannel.m */; };
@@ -36,17 +36,6 @@
 			);
 			script = "cd \"$INPUT_FILE_DIR\"  # move into file dir, otherwise xxd takes the full path for the symbol\n/usr/bin/xxd -i \"$INPUT_FILE_NAME\" \"$DERIVED_SOURCES_DIR/$INPUT_FILE_BASE.html.c\" # builds a c file with a hex array";
 		};
-		3D1C0C891660F42300C8FA3C /* PBXBuildRule */ = {
-			isa = PBXBuildRule;
-			compilerSpec = com.apple.compilers.proxy.script;
-			filePatterns = "*.js";
-			fileType = pattern.proxy;
-			isEditable = 1;
-			outputFiles = (
-				"${INPUT_FILE_BASE}.js.c",
-			);
-			script = "cd \"$INPUT_FILE_DIR\"  # move into file dir, otherwise xxd takes the full path for the symbol\n/usr/bin/xxd -i \"$INPUT_FILE_NAME\" \"$DERIVED_SOURCES_DIR/$INPUT_FILE_BASE.js.c\" # builds a c file with a hex array";
-		};
 /* End PBXBuildRule section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -64,7 +53,7 @@
 
 /* Begin PBXFileReference section */
 		3D1C0C811660E7ED00C8FA3C /* AppEngineChannel.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = AppEngineChannel.html; sourceTree = "<group>"; };
-		3D1C0C871660F41100C8FA3C /* AppEngineChannel.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = AppEngineChannel.js; sourceTree = "<group>"; };
+		3D57517A16623B2A008130DF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		3D59897C15EE55D70009F580 /* libAppEngineChannel.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libAppEngineChannel.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D59897F15EE55D70009F580 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3D59898315EE55D70009F580 /* AppEngineChannel-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "AppEngineChannel-Prefix.pch"; sourceTree = "<group>"; };
@@ -111,6 +100,7 @@
 		3D59897115EE55D60009F580 = {
 			isa = PBXGroup;
 			children = (
+				3D57517A16623B2A008130DF /* Default-568h@2x.png */,
 				3D59898115EE55D70009F580 /* AppEngineChannel */,
 				3D59899815EE57A10009F580 /* AppEngineChannelClientExample */,
 				3D59897E15EE55D70009F580 /* Frameworks */,
@@ -143,7 +133,6 @@
 				3D59898415EE55D70009F580 /* AppEngineChannel.h */,
 				3D59898615EE55D70009F580 /* AppEngineChannel.m */,
 				3D1C0C811660E7ED00C8FA3C /* AppEngineChannel.html */,
-				3D1C0C871660F41100C8FA3C /* AppEngineChannel.js */,
 				3D59898215EE55D70009F580 /* Supporting Files */,
 			);
 			path = AppEngineChannel;
@@ -193,7 +182,6 @@
 				3D59897A15EE55D60009F580 /* CopyFiles */,
 			);
 			buildRules = (
-				3D1C0C891660F42300C8FA3C /* PBXBuildRule */,
 				3D1C0C851660F02E00C8FA3C /* PBXBuildRule */,
 			);
 			dependencies = (
@@ -254,6 +242,7 @@
 			files = (
 				3D59899D15EE57A10009F580 /* InfoPlist.strings in Resources */,
 				3D5989A615EE57A10009F580 /* MainStoryboard.storyboard in Resources */,
+				3D57517B16623B2A008130DF /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -266,7 +255,6 @@
 			files = (
 				3D59898715EE55D70009F580 /* AppEngineChannel.m in Sources */,
 				3D1C0C861660F0E300C8FA3C /* AppEngineChannel.html in Sources */,
-				3D1C0C881660F41100C8FA3C /* AppEngineChannel.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
