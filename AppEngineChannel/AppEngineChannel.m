@@ -52,20 +52,22 @@
     NSArray *commands = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
     
     NSLog(@"json: %@", json);
-    for (NSArray *command in commands) {
-        NSString *action = [command objectAtIndex:0];
-        NSDictionary *params = [command objectAtIndex:1];
-        
-        if (isRespond(@"onmessage", @selector(appEngineChannel:didReceiveMessage:))) {
-            [_delegate appEngineChannel:self didReceiveMessage:params];
-        } else if (isRespond(@"onerror", @selector(appEngineChannel:didReceiveError:))) {
-            [_delegate appEngineChannel:self didReceiveError:params];
-        } else if(isRespond(@"onopen", @selector(appEngineChannelDidConnect:))) {
-            [_delegate appEngineChannelDidConnect:self];
-        } else if (isRespond(@"onclose", @selector(appEngineChannelDidDisconnect:))) {
-            [_delegate appEngineChannelDidDisconnect:self];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        for (NSArray *command in commands) {
+            NSString *action = [command objectAtIndex:0];
+            NSDictionary *params = [command objectAtIndex:1];
+            
+            if (isRespond(@"onmessage", @selector(appEngineChannel:didReceiveMessage:))) {
+                [_delegate appEngineChannel:self didReceiveMessage:params];
+            } else if (isRespond(@"onerror", @selector(appEngineChannel:didReceiveError:))) {
+                [_delegate appEngineChannel:self didReceiveError:params];
+            } else if(isRespond(@"onopen", @selector(appEngineChannelDidConnect:))) {
+                [_delegate appEngineChannelDidConnect:self];
+            } else if (isRespond(@"onclose", @selector(appEngineChannelDidDisconnect:))) {
+                [_delegate appEngineChannelDidDisconnect:self];
+            }
         }
-    }
+    });
     
     return NO;
 }

@@ -3,22 +3,16 @@
     <body>
         <script src="/_ah/channel/jsapi"></script>
         <script>
-            var iframe = null;
             var queue  = [];
-            
-            var create_iframe = function() {
-                iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                iframe.src = 'appenginechannel://ready';
-                document.body.appendChild(iframe);
-            };
-            
-            var remove_iframe = function () {
-                document.body.removeChild(iframe);
-            };
+            var iframe = document.createElement('iframe');
+            iframe.style.display = 'none';
+            iframe.src = 'appenginechannel://ready';
             
             var fetch = function() {
-                remove_iframe();
+                if(iframe.parentNode) {
+                    iframe.parentNode.removeChild(iframe);
+                }
+                
                 var json = JSON.stringify(queue);
                 queue.length = 0;
                 return json;
@@ -26,7 +20,10 @@
             
             var dispatch = function(command, params) {
                 queue.push([command, params]);
-                create_iframe();
+                
+                if(!iframe.parentNode) {
+                    document.body.appendChild(iframe);
+                }
             };
             
             var channel = new goog.appengine.Channel('%@');
